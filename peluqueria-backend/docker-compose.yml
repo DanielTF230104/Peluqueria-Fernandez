@@ -1,0 +1,47 @@
+services:
+  # Base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: peluqueria_db_cont
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: peluqueria
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: admin_pelu
+      MYSQL_PASSWORD: Peluqueria2026*
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  # Backend Laravel (API)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: peluqueria_api
+    restart: unless-stopped
+    working_dir: /var/www/
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+
+  # Frontend Angular
+  frontend:
+    build:
+      context: ../peluqueria-frontend # Sube un nivel y entra en la carpeta de Angular
+    container_name: peluqueria_frontend
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    volumes:
+      - ../peluqueria-frontend:/app
+      - /app/node_modules # Evita que Docker sobrescriba tus librerías locales
+    depends_on:
+      - api
+
+volumes:
+  dbdata:

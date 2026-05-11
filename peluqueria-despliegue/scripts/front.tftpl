@@ -1,0 +1,36 @@
+#!/bin/bash
+hostnamectl set-hostname FRONT-ANGULAR
+exec > /tmp/userdata.log 2>&1
+
+apt update -y
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt install -y apache2 nodejs
+
+a2enmod proxy
+a2enmod proxy_http
+a2enmod rewrite
+
+cat > /etc/apache2/sites-available/peluqueria.conf <<EOF
+<VirtualHost *:80>
+    DocumentRoot /var/www/html/dist/peluqueria/browser
+    
+    ProxyPass "/api" "http://${api_dns}/api"
+    ProxyPassReverse "/api" "http://${api_dns}/api"
+
+    <Directory /var/www/html/dist/peluqueria/browser>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+        
+        RewriteEngine On
+        # Usamos $$ para que Terraform no intente leerlo como variable
+        RewriteCond $${REQUEST_FILENAME} !-f
+        RewriteCond $${REQUEST_FILENAME} !-d
+        RewriteRule . index.html [L]
+    </Directory>
+</VirtualHost>
+EOF
+
+a2dissite 000-default
+a2ensite peluqueria.conf
+systemctl restart apache2
