@@ -1,0 +1,51 @@
+<section class="admin-container">
+  <h2>Todas las Reservas de Clientes</h2>
+
+  <div class="filtros-box">
+    <div class="filtro-item">
+      <label>Cliente</label>
+      <input type="text" [(ngModel)]="filtros.nombre" (input)="aplicarFiltros()" placeholder="Nombre del cliente...">
+    </div>
+
+    <div class="filtro-item">
+      <label>Servicio</label>
+      <input type="text" [(ngModel)]="filtros.servicio" (input)="aplicarFiltros()" placeholder="Ej: Tinte, Corte...">
+    </div>
+
+    <div class="filtro-item">
+      <label>Fecha</label>
+      <input type="date" [(ngModel)]="filtros.fecha" (change)="aplicarFiltros()">
+    </div>
+
+    <div class="filtro-item">
+      <label>Hora</label>
+      <input type="text" [(ngModel)]="filtros.hora" (input)="aplicarFiltros()" placeholder="16:00...">
+    </div>
+
+    <div class="filtro-item">
+      <label>Teléfono</label>
+      <input type="text" [(ngModel)]="filtros.telefono" (input)="aplicarFiltros()" placeholder="Buscar teléfono...">
+    </div>
+
+    <button class="btn-clear" (click)="limpiarFiltros()">Resetear</button>
+  </div>
+
+  <div class="citas-grid">
+    <div class="user-card" *ngFor="let cita of citasFiltradas" [class.cita-pasada]="esPasada(cita.fecha)">
+      <div class="user-info">
+        <p><strong>Cliente:</strong> {{ cita.nombre }}</p>
+        <p><strong>Servicio:</strong> {{ cita.servicio }} <span class="precio-tag">{{ cita.precio }}€</span></p>
+        <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+        <p><strong>Hora:</strong> {{ cita.hora }}</p>
+        <p><strong>Teléfono:</strong> {{ cita.telefono }}</p>
+        <div *ngIf="cita.observaciones" class="observaciones-box">
+          <strong>Notas:</strong> {{ cita.observaciones }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="citasFiltradas.length === 0" class="no-results">
+    No se han encontrado citas que coincidan con los filtros.
+  </div>
+</section>

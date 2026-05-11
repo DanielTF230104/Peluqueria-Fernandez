@@ -1,0 +1,27 @@
+<section class="auth">
+  <div class="auth-box">
+
+    <h1 class="titulo">Peluquería Fernández</h1>
+    <h2>Crear cuenta</h2>
+
+    <form (ngSubmit)="registrar()">
+
+      <input type="text" placeholder="Nombre" [(ngModel)]="usuario.name" name="name" required>
+      
+      <input type="tel" placeholder="Teléfono" [(ngModel)]="usuario.telefono" name="telefono" pattern="[0-9]{9}" required>
+
+      <input type="email" placeholder="Email" [(ngModel)]="usuario.email" name="email" required>
+
+      <input type="password" placeholder="Contraseña" [(ngModel)]="usuario.password" name="password" required>
+
+      <button type="submit" class="btn-principal">Registrarse</button>
+
+    </form>
+
+    <p class="link">
+      ¿Ya tienes cuenta?
+      <span (click)="irLogin()">Inicia sesión</span>
+    </p>
+
+  </div>
+</section>

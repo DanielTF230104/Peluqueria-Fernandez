@@ -1,0 +1,32 @@
+<header class="cabecera" [class.scrolled]="scrolled">
+  <div class="cabecera-contenido">
+
+    <div class="logo-container" (click)="irAInicio()">
+      <img src="logopelu2.png" class="logo-img" alt="Logo">
+      <h1 class="titulo">Peluquería Fernández</h1>
+    </div>
+
+    <ng-container *ngIf="mostrarBotones">
+      
+      <div class="menu-toggle" (click)="toggleMenu()" [class.open]="menuAbierto">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="acciones" [class.activo]="menuAbierto">
+        <button class="btn" *ngIf="isAdmin" (click)="irGestionCitas(); cerrarMenu()">Ver Citas</button>
+        <button class="btn secondary" *ngIf="isAdmin" (click)="irAdmin(); cerrarMenu()">Gestionar usuarios</button>
+        
+        <button class="btn primary" *ngIf="!isAdmin" (click)="reservar(); cerrarMenu()">Reservar</button>
+        
+        <button class="btn" (click)="verPerfil(); cerrarMenu()">Perfil</button>
+        <button class="btn danger" (click)="cerrarSesion(); cerrarMenu()">Salir</button>
+      </div>
+      
+    </ng-container>
+
+  </div>
+
+  <div class="overlay" *ngIf="menuAbierto" (click)="cerrarMenu()"></div>
+</header>

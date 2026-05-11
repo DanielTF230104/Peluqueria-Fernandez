@@ -1,0 +1,129 @@
+.formulario {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.titulo-formulario {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  color: #0b1d2a;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.campo label {
+  margin-bottom: 0.4rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: #333;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+}
+
+/* Campos de solo lectura (Nombre y Teléfono) */
+.readonly-field {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+  border: 1px solid #e9ecef;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: #c9a96e;
+  box-shadow: 0 0 5px rgba(201,169,110,0.4);
+}
+
+/* Estilo para las horas ocupadas en el select */
+select option:disabled {
+  color: #dc3545;
+  background-color: #fff5f5;
+  font-style: italic;
+}
+
+.precio {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #fcfaf5;
+  border-left: 4px solid #c9a96e;
+  text-align: right;
+  font-size: 1.1rem;
+}
+
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-principal {
+  background-color: #c9a96e;
+  color: #111;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-principal:hover:not(:disabled) {
+  background-color: #b8965f;
+}
+
+.btn-principal:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+  color: #999;
+}
+
+.btn-secundario {
+  background-color: #6c757d;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+select option:disabled {
+  color: #a0a0a0;
+  background-color: #f5f5f5;
+  font-style: italic;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .botones {
+    flex-direction: column;
+  }
+  .btn-principal, .btn-secundario {
+    width: 100%;
+  }
+}

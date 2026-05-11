@@ -1,0 +1,34 @@
+.verificar-container {
+    padding: 150px 20px; /* Asegura que no lo tape el header scrolled */
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.verificar-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-top: 5px solid #c9a96e;
+}
+
+.icono {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #102a3a;
+    margin-bottom: 15px;
+}
+
+p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.acciones {
+    margin-top: 20px;
+}

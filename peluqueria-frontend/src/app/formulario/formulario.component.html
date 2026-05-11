@@ -1,0 +1,109 @@
+<section class="formulario">
+  <h2 class="titulo-formulario">Reserva tu cita</h2>
+
+  <form (ngSubmit)="guardarReserva()" #miFormulario="ngForm">
+
+    <div class="campo">
+      <label>Nombre</label>
+      <input 
+        type="text" 
+        [(ngModel)]="form.nombre" 
+        name="nombre" 
+        required 
+        #nombre="ngModel"
+        readonly
+        class="readonly-field"
+      >
+    </div>
+
+    <div class="campo">
+      <label>Teléfono</label>
+      <input 
+        type="tel" 
+        [(ngModel)]="form.telefono" 
+        name="telefono" 
+        required 
+        #telefono="ngModel"
+        readonly
+        class="readonly-field"
+      >
+    </div>
+
+    <div class="campo">
+      <label>Servicio</label>
+      <select 
+        [(ngModel)]="form.servicio" 
+        name="servicio" 
+        required 
+        #servicio="ngModel"
+      >
+        <option [ngValue]="null" disabled selected>Seleccione un servicio</option>
+        <option *ngFor="let s of servicios" [ngValue]="s">
+          {{ s.nombre }} - {{ s.precio }}€
+        </option>
+      </select>
+      <small *ngIf="servicio.invalid && servicio.touched" class="error">Selecciona un servicio</small>
+    </div>
+
+    <div class="campo">
+      <label>Fecha</label>
+      <input 
+        type="date" 
+        [(ngModel)]="form.fecha" 
+        name="fecha" 
+        required 
+        [min]="fechaMinima" 
+        (change)="alCambiarFecha()"
+        #fecha="ngModel"
+      >
+      <small *ngIf="fecha.invalid && fecha.touched" class="error">La fecha es obligatoria</small>
+    </div>
+
+    <div class="campo">
+      <label for="hora">Hora</label>
+      <select 
+        id="hora"
+        [(ngModel)]="form.hora" 
+        name="hora" 
+        required 
+        #horaModel="ngModel"
+        [disabled]="!form.fecha"
+      >
+        <option value="" disabled selected>
+          {{ !form.fecha ? 'Selecciona primero una fecha' : 'Seleccione una hora' }}
+        </option>
+
+        <option 
+          *ngFor="let h of horasPosibles" 
+          [value]="h" 
+          [disabled]="estaOcupada(h)"
+        >
+          {{ h }} {{ estaOcupada(h) ? '— (Ocupado)' : '' }}
+        </option>
+      </select>
+
+      <small *ngIf="horaModel.invalid && horaModel.touched && form.fecha" class="error">
+        La hora es obligatoria
+      </small>
+    </div>
+
+    <div class="campo">
+      <label>Observaciones</label>
+      <textarea [(ngModel)]="form.observaciones" name="observaciones"></textarea>
+    </div>
+
+    <div *ngIf="form.servicio" class="precio">
+      Precio: <strong>{{ form.servicio.precio }} €</strong>
+    </div>
+
+    <div class="botones">
+      <button type="submit" class="btn-principal" [disabled]="miFormulario.invalid">
+        Reservar cita
+      </button>
+      <button type="button" class="btn-secundario" (click)="volverInicio()">
+        Volver
+      </button>
+    </div>
+
+  </form>
+</section>

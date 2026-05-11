@@ -1,0 +1,67 @@
+<section class="perfil-container">
+    <div class="perfil-card">
+        <h2>Mi Perfil</h2>
+        <div class="datos">
+            <p><strong>Nombre:</strong> {{ usuario.name }}</p>
+            <p><strong>Email:</strong> {{ usuario.email }}</p>
+        </div>
+    </div>
+
+    <div class="citas-card">
+        <h2>Mis Reservas</h2>
+        
+        <div *ngIf="citas.length === 0" class="sin-citas">No tienes ninguna reserva registrada.</div>
+
+        <div class="cita-item" 
+             *ngFor="let cita of citas" 
+             [class.cita-pasada]="haPasadoMediaHora(cita)">
+        
+            <div *ngIf="editandoId !== cita.id" class="cita-info">
+                <div>
+                    <h3>{{ cita.servicio }} <small *ngIf="haPasadoMediaHora(cita)">(Finalizada)</small></h3>
+                    <p><strong>Fecha:</strong> {{ cita.fecha }} | <strong>Hora:</strong> {{ cita.hora }}</p>
+                    <p><strong>Precio:</strong> {{ cita.precio }}€</p>
+                </div>
+
+                <div class="cita-acciones" *ngIf="!haPasadoMediaHora(cita)">
+                    <button class="btn edit" (click)="activarEdicion(cita)">Editar</button>
+                    <button class="btn delete" (click)="borrarCita(cita.id)">Cancelar</button>
+                </div>
+            </div>
+
+            <div *ngIf="editandoId === cita.id" class="cita-edit">
+                <h3>Modificar reserva</h3>
+
+                <label>Servicio:</label>
+                <select [(ngModel)]="citaEditada.servicio" (change)="cambiarServicioEdicion($event)">
+                    <option *ngFor="let s of servicios" [value]="s.nombre">
+                        {{ s.nombre }} ({{ s.precio }}€)
+                    </option>
+                </select>
+
+                <label>Fecha:</label>
+                <input type="date" [(ngModel)]="citaEditada.fecha" (change)="alCambiarFechaEdicion()">
+
+                <label>Hora:</label>
+                <select [(ngModel)]="citaEditada.hora">
+                    <option *ngFor="let h of horasPosibles" 
+                            [value]="h" 
+                            [disabled]="estaOcupadaEdicion(h)">
+                        {{ h }} {{ estaOcupadaEdicion(h) ? '— (Ocupado)' : '' }}
+                    </option>
+                </select>
+
+                <p>Nuevo precio: <strong>{{ citaEditada.precio }}€</strong></p>
+
+                <div class="cita-acciones">
+                    <button class="btn save" 
+                            (click)="guardarEdicion(cita.id)"
+                            [disabled]="!citaEditada.hora || estaOcupadaEdicion(citaEditada.hora)">
+                        Confirmar Cambios
+                    </button>
+                    <button class="btn" (click)="cancelarEdicion()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

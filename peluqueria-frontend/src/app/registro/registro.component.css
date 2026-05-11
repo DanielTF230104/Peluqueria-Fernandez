@@ -1,0 +1,54 @@
+.auth {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0b1d2a, #102a3a);
+}
+
+.auth-box {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 10px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.titulo {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+input:focus {
+  outline: none;
+  border-color: #c9a96e;
+}
+
+.btn-principal {
+  width: 100%;
+  background-color: #c9a96e;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-principal:hover {
+  background-color: #b8965f;
+}
+
+.link span {
+  color: #c9a96e;
+  cursor: pointer;
+  font-weight: bold;
+}

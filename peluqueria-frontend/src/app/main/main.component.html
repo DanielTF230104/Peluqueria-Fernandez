@@ -1,0 +1,80 @@
+<section class="inicio-bloque">
+  <div class="inicio-grid">
+
+    <div class="inicio-texto principal">
+      <p class="titulo-grande">
+        Bienvenido a Peluquería Fernández
+      </p>
+    </div>
+
+    <div class="inicio-texto oscuro">
+      <img src="local.png" class="imagen-responsive">
+      <p class="texto">
+        Tu peluquería unisex de confianza. Ofrecemos servicios profesionales
+        de corte, coloración y cuidado capilar con las últimas tendencias.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="inicio-bloque">
+  <p class="titulo-seccion">
+    Nuestros servicios destacados
+  </p>
+
+  <div class="contenido-grid">
+
+    <!-- Carrusel -->
+    <div class="carousel">
+      <button class="nav prev" (click)="anterior()">‹</button>
+
+      <div class="carousel-item">
+        <img [src]="imagenes[indiceActual].src">
+        <p class="carousel-texto">
+          {{ imagenes[indiceActual].texto }}
+        </p>
+      </div>
+
+      <button class="nav next" (click)="siguiente()">›</button>
+    </div>
+
+    <!-- Info -->
+    <div class="info">
+      <h3>¿Qué ofrecemos?</h3>
+      <ul>
+        <li>Cortes modernos y personalizados</li>
+        <li>Tintes y mechas profesionales</li>
+        <li>Arreglo de barba</li>
+        <li>Peinados para eventos</li>
+        <li>Asesoramiento de imagen</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="inicio-bloque">
+  <div class="inicio-grid">
+
+    <div class="inicio-texto oscuro">
+      <img src="equipo.png" class="imagen-ajustada">
+      <p class="texto">
+        Nuestro equipo está formado por profesionales con experiencia
+        que te ayudarán a conseguir el look perfecto.
+      </p>
+    </div>
+
+    <div class="inicio-texto principal centrado">
+      <p class="titulo-mediano">
+        Reserva tu cita y luce tu mejor versión
+      </p>
+      <img src="cliente.png" class="imagen-ajustada">
+    </div>
+
+  </div>
+</section>
+
+<div class="acciones">
+  <button class="btn-principal" (click)="reservar()">Reservar cita</button>
+</div>

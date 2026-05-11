@@ -1,0 +1,52 @@
+<section class="admin-container">
+  <h2>Panel de Control - Usuarios</h2>
+  
+  <div class="user-card" *ngFor="let user of usuarios">
+    
+    <!-- VISTA NORMAL -->
+    <div *ngIf="editandoId !== user.id" class="user-info">
+      <!-- Indicador visual de tu cuenta -->
+      <span *ngIf="user.id === idAdminLogueado" class="badge-me">Tú</span>
+      
+      <p><strong>ID:</strong> {{ user.id }} | <strong>Rol:</strong> {{ user.role | uppercase }}</p>
+      <p><strong>Nombre:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Teléfono:</strong> {{ user.telefono || 'No indicado' }}</p>
+      
+      <div class="acciones">
+        <ng-container *ngIf="user.id !== idAdminLogueado">
+          <button class="btn edit" (click)="activarEdicion(user)">Editar</button>
+          <button class="btn danger" (click)="borrarUsuario(user.id)">Eliminar</button>
+        </ng-container>
+        
+        <p *ngIf="user.id === idAdminLogueado" class="nota-seguridad">
+          No puedes editarte a tí mismo
+        </p>
+      </div>
+    </div>
+
+    <!-- MODO EDICIÓN -->
+    <div *ngIf="editandoId === user.id" class="user-edit">
+      <label>Nombre:</label> 
+      <input type="text" [(ngModel)]="usuarioEditado.name" readonly class="input-bloqueado">
+
+      <label>Email:</label> 
+      <input type="email" [(ngModel)]="usuarioEditado.email" readonly class="input-bloqueado">
+
+      <label>Teléfono:</label> 
+      <input type="text" [(ngModel)]="usuarioEditado.telefono">
+
+      <label>Rol:</label> 
+      <select [(ngModel)]="usuarioEditado.role">
+        <option value="user">Usuario normal</option>
+        <option value="admin">Administrador</option>
+      </select>
+
+      <div class="acciones">
+        <button class="btn primary" (click)="guardarEdicion(user.id)">Guardar</button>
+        <button class="btn" (click)="editandoId = null">Cancelar</button>
+      </div>
+    </div>
+
+  </div>
+</section>
