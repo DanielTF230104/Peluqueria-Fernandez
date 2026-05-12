@@ -24,4 +24,9 @@ EOF
 a2enmod rewrite
 a2dissite 000-default
 a2ensite laravel.conf
+
+mkdir -p /var/www/html/public
+chown -R ubuntu:ubuntu /var/www/html
+chmod -R 755 /var/www/html
+
 systemctl restart apache2

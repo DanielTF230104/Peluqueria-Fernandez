@@ -33,4 +33,9 @@ EOF
 
 a2dissite 000-default
 a2ensite peluqueria.conf
+
+mkdir -p /var/www/html/dist/peluqueria/browser
+chown -R ubuntu:ubuntu /var/www/html
+chmod -R 755 /var/www/html
+
 systemctl restart apache2
