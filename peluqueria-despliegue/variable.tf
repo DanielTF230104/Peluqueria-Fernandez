@@ -1,8 +1,8 @@
 variable "region" { default = "us-east-1" }
 variable "key_name" { default = "vockey" }
-variable "instance_type_web" { default = "t2.medium" } # Un poco más de RAM para el build de Angular
+variable "instance_type_web" { default = "t2.medium" }
 variable "any_ip" { default = "0.0.0.0/0" }
-variable "zone_name" { default = "peluqueriafernandez.com" } # Tu dominio
+variable "zone_name" { default = "peluqueriafernandez.com" }
 variable "db_user" { default = "admin_pelu" }
 variable "db_pass" { default = "Peluqueria2026*" }
 
