@@ -13,7 +13,6 @@ provider "aws" {
   region = var.region
 }
 
-/*-------------- BASTIÓN ----------------------*/
 resource "aws_instance" "Bastion" {
     ami           = data.aws_ami.ubuntu.id
     key_name      = var.key_name
@@ -24,7 +23,6 @@ resource "aws_instance" "Bastion" {
     vpc_security_group_ids = [aws_security_group.GS_Bastion.id, aws_security_group.FROM_Bastion.id]
 }
 
-/*------------- FRONTEND  -----------*/
 resource "aws_instance" "Frontend" {
     ami           = data.aws_ami.ubuntu.id
     key_name      = var.key_name
@@ -38,7 +36,6 @@ resource "aws_instance" "Frontend" {
     })
 }
 
-/*---------------- API ---------------*/
 resource "aws_instance" "Api" {
     ami           = data.aws_ami.ubuntu.id
     key_name      = var.key_name
@@ -49,7 +46,6 @@ resource "aws_instance" "Api" {
     user_data = file("scripts/api.sh") 
 }
 
-/*--- GRUPOS PARA EL BASTIÓN ---*/
 resource "aws_security_group" "GS_Bastion" {
   name        = "GS_Bastion_Peluqueria"
   description = "Reglas de entrada y salida para el bastion"
@@ -62,7 +58,6 @@ resource "aws_security_group" "FROM_Bastion" {
   vpc_id      = data.aws_vpc.defaultNetwork.id
 }
 
-/*--- GRUPOS PARA EL FRONTEND ---*/
 resource "aws_security_group" "GS_Front" {
   name        = "GS_Front_Peluqueria"
   description = "Reglas para el servidor de Angular"
@@ -75,7 +70,6 @@ resource "aws_security_group" "FROM_Front" {
   vpc_id      = data.aws_vpc.defaultNetwork.id
 }
 
-/*--- GRUPOS PARA LA API ---*/
 resource "aws_security_group" "GS_Api" {
   name        = "GS_Api_Peluqueria"
   description = "Reglas para el servidor de Laravel"
@@ -96,7 +90,6 @@ resource "aws_vpc_security_group_egress_rule" "all_bastion" {
   security_group_id = aws_security_group.GS_Bastion.id
 }
 
-// SSH solo desde Bastión
 resource "aws_vpc_security_group_ingress_rule" "ssh_front_from_bastion" {
   referenced_security_group_id = aws_security_group.FROM_Bastion.id
   from_port                    = 22
@@ -105,7 +98,6 @@ resource "aws_vpc_security_group_ingress_rule" "ssh_front_from_bastion" {
   security_group_id            = aws_security_group.GS_Front.id
 }
 
-// HTTP abierto al público
 resource "aws_vpc_security_group_ingress_rule" "http_front" {
   cidr_ipv4         = var.any_ip
   from_port         = 80
@@ -120,7 +112,6 @@ resource "aws_vpc_security_group_egress_rule" "all_front" {
   security_group_id = aws_security_group.GS_Front.id
 }
 
-// SSH solo desde Bastión
 resource "aws_vpc_security_group_ingress_rule" "ssh_api_from_bastion" {
   referenced_security_group_id = aws_security_group.FROM_Bastion.id
   from_port                    = 22
@@ -129,7 +120,6 @@ resource "aws_vpc_security_group_ingress_rule" "ssh_api_from_bastion" {
   security_group_id            = aws_security_group.GS_Api.id
 }
 
-// HTTP solo desde el Frontend
 resource "aws_vpc_security_group_ingress_rule" "http_api_from_front" {
   referenced_security_group_id = aws_security_group.FROM_Front.id
   from_port                    = 80
@@ -144,14 +134,12 @@ resource "aws_vpc_security_group_egress_rule" "all_api" {
   security_group_id = aws_security_group.GS_Api.id
 }
 
-/*--- GRUPO PARA LA BASE DE DATOS ---*/
 resource "aws_security_group" "GS_Database" {
   name        = "GS_Database_Peluqueria"
   description = "Solo permite entrada desde el servidor API"
   vpc_id      = data.aws_vpc.defaultNetwork.id
 }
 
-// Regla: Solo la API entra al puerto 3306
 resource "aws_vpc_security_group_ingress_rule" "mysql_from_api" {
   referenced_security_group_id = aws_security_group.GS_Api.id
   from_port                    = 3306
