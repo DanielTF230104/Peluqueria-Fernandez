@@ -5,11 +5,9 @@ exec > /tmp/userdata.log 2>&1
 apt update -y
 apt install -y apache2 php8.2 php8.2-mysql php8.2-xml php8.2-curl php8.2-mbstring zip unzip libapache2-mod-php
 
-# Instalamos Composer
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
-# Configuración de Apache para Laravel
 cat > /etc/apache2/sites-available/laravel.conf <<EOF
 <VirtualHost *:80>
     # Apuntamos a la carpeta public de tu proyecto

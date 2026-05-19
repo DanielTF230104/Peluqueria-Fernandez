@@ -24,7 +24,7 @@ resource "aws_instance" "Bastion" {
     vpc_security_group_ids = [aws_security_group.GS_Bastion.id, aws_security_group.FROM_Bastion.id]
 }
 
-/*------------- FRONTEND (Angular) -----------*/
+/*------------- FRONTEND  -----------*/
 resource "aws_instance" "Frontend" {
     ami           = data.aws_ami.ubuntu.id
     key_name      = var.key_name
@@ -33,13 +33,12 @@ resource "aws_instance" "Frontend" {
 
     vpc_security_group_ids = [aws_security_group.GS_Front.id, aws_security_group.FROM_Front.id]
     
-    # Pasamos la DNS de la API al script del front para que sepa dónde enviar las peticiones
     user_data = templatefile("scripts/front.tftpl", { 
         api_dns = aws_route53_record.api.fqdn 
     })
 }
 
-/*---------------- API (Laravel) ---------------*/
+/*---------------- API ---------------*/
 resource "aws_instance" "Api" {
     ami           = data.aws_ami.ubuntu.id
     key_name      = var.key_name
@@ -171,11 +170,10 @@ resource "aws_db_instance" "mysql_db" {
   password             = var.db_pass
   parameter_group_name = "default.mysql8.0"
   skip_final_snapshot  = true
-  publicly_accessible  = false # Importante: Que no sea pública
+  publicly_accessible  = false
   vpc_security_group_ids = [aws_security_group.GS_Database.id]
 }
 
-# También le creamos un registro DNS interno para que la API la encuentre fácil
 resource "aws_route53_record" "db" {
   zone_id = aws_route53_zone.peluqueria_dns.id
   name    = "db"
