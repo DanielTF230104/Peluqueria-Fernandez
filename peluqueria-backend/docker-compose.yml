@@ -32,14 +32,14 @@ services:
   # Frontend Angular
   frontend:
     build:
-      context: ../peluqueria-frontend # Sube un nivel y entra en la carpeta de Angular
+      context: ../peluqueria-frontend
     container_name: peluqueria_frontend
     restart: unless-stopped
     ports:
       - "4200:4200"
     volumes:
       - ../peluqueria-frontend:/app
-      - /app/node_modules # Evita que Docker sobrescriba tus librerías locales
+      - /app/node_modules
     depends_on:
       - api
 
