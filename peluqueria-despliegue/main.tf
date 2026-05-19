@@ -190,3 +190,15 @@ resource "aws_route53_record" "frontend" {
   ttl     = 300
   records = [aws_instance.Frontend.private_ip]
 }
+
+resource "aws_eip" "api_elastic_ip" {
+  instance = aws_instance.Api.id
+  domain   = "vpc"
+  tags     = { Name = "EIP-API-Peluqueria" }
+}
+
+resource "aws_eip" "front_elastic_ip" {
+  instance = aws_instance.Frontend.id
+  domain   = "vpc"
+  tags     = { Name = "EIP-Front-Peluqueria" }
+}
