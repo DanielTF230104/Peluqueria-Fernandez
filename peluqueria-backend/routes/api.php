@@ -29,19 +29,21 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
     $user = User::find($id);
 
+    $frontendUrl = env('FRONTEND_URL', 'http://localhost:4200');
+
     if (! $request->hasValidSignature() || 
         ! $user || 
         ! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-        return redirect('http://localhost:4200/verificar-email?status=error');
+        return redirect($frontendUrl . '/verificar-email?status=error');
     }
 
     if ($user->hasVerifiedEmail()) {
-        return redirect('http://localhost:4200/verificar-email?status=ya_verificado');
+        return redirect($frontendUrl . '/verificar-email?status=ya_verificado');
     }
 
     if ($user->markEmailAsVerified()) {
         event(new Verified($user));
     }
 
-    return redirect('http://localhost:4200/verificar-email?status=exito');
+    return redirect($frontendUrl . '/verificar-email?status=exito');
 })->middleware(['signed'])->name('verification.verify');
