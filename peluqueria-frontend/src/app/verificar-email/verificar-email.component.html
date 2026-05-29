@@ -3,13 +3,5 @@
         <div class="icono">{{ icono }}</div>
         <h1>{{ titulo }}</h1>
         <p>{{ mensaje }}</p>
-
-        <div class="acciones" *ngIf="mostrarBotonLogin">
-            <button class="btn primary" (click)="irAlLogin()">Ir al Login</button>
-        </div>
-        
-        <div class="acciones" *ngIf="!mostrarBotonLogin && titulo !== 'Verificando...'">
-            <button class="btn secondary" (click)="irAlLogin()">Volver al Inicio</button>
-        </div>
     </div>
 </section>
